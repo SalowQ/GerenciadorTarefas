@@ -1,4 +1,5 @@
 ﻿using GerenciadorTarefas.Application.UseCases.Task.Register;
+using GerenciadorTarefas.Application.UseCases.Task.Update;
 using GerenciadorTarefas.Communication.Requests;
 using GerenciadorTarefas.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +20,20 @@ namespace GerenciadorTarefas.API.Controllers
 
             return Created(string.Empty, response);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
+        public IActionResult UpdatePet([FromRoute] int id, [FromBody] RequestTaskJson request)
+        {
+            var useCase = new UpdateTaskUseCase();
+
+            useCase.Execute(id, request);
+
+            return NoContent();
+        }
     }
+
+
 }
