@@ -1,4 +1,5 @@
-﻿using GerenciadorTarefas.Application.UseCases.Task.Register;
+﻿using GerenciadorTarefas.Application.UseCases.Task.GetAll;
+using GerenciadorTarefas.Application.UseCases.Task.Register;
 using GerenciadorTarefas.Application.UseCases.Task.Update;
 using GerenciadorTarefas.Communication.Requests;
 using GerenciadorTarefas.Communication.Responses;
@@ -30,6 +31,21 @@ namespace GerenciadorTarefas.API.Controllers
             var useCase = new UpdateTaskUseCase();
 
             useCase.Execute(id, request);
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ResponseAllTasksJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult GetAllPets()
+        {
+            var response = new GetAllTasksUseCase().Execute();
+
+            if (response.Tasks.Any())
+            {
+                return Ok(response);
+            }
 
             return NoContent();
         }
