@@ -1,9 +1,10 @@
 ﻿using GerenciadorTarefas.Communication.Enums;
 
-namespace GerenciadorTarefas.Communication.Requests
+namespace GerenciadorTarefas.Communication.Responses
 {
-    public class RequestTaskJson
+    public class ResponseTaskJson
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public Priority Priority { get; set; }

@@ -1,4 +1,6 @@
-﻿using GerenciadorTarefas.Application.UseCases.Task.GetAll;
+﻿using GerenciadorTarefas.Application.UseCases.Task.Delete;
+using GerenciadorTarefas.Application.UseCases.Task.GetAll;
+using GerenciadorTarefas.Application.UseCases.Task.GetById;
 using GerenciadorTarefas.Application.UseCases.Task.Register;
 using GerenciadorTarefas.Application.UseCases.Task.Update;
 using GerenciadorTarefas.Communication.Requests;
@@ -46,6 +48,30 @@ namespace GerenciadorTarefas.API.Controllers
             {
                 return Ok(response);
             }
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(ResponseTaskJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+        public IActionResult Get(int id)
+        {
+            var response = new GetTaskByIdUseCase().Execute(id);
+
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
+        {
+            var useCase = new DeleteTaskByIdUseCase();
+
+            useCase.Execute(id);
 
             return NoContent();
         }
